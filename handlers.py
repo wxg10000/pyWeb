@@ -85,7 +85,7 @@ def index(*, page='1'):
     else:
         blogs = yield from Blog.findAll(orderBy='created_at desc', limit=(page.offset, page.limit))
     return {
-        '__template__': 'signin.html',
+        '__template__': '__base__.html',
         'page': page,
         'blogs': blogs
     }
