@@ -12,7 +12,7 @@ import markdown2
 from aiohttp import web
 
 from coroweb import get, post
-from apis import Page, APIValueError, APIResourceNotFoundError
+from apis import Page, APIValueError, APIResourceNotFoundError, APIPermissionError, APIError
 
 from models import User, Comment, Blog, next_id
 from config import configs
@@ -85,7 +85,7 @@ def index(*, page='1'):
     else:
         blogs = yield from Blog.findAll(orderBy='created_at desc', limit=(page.offset, page.limit))
     return {
-        '__template__': 'blogs.html',
+        '__template__': 'signin.html',
         'page': page,
         'blogs': blogs
     }
@@ -147,6 +147,7 @@ def signout(request):
     r.set_cookie(COOKIE_NAME, '-deleted-', max_age=0, httponly=True)
     logging.info('user signed out.')
     return r
+
 
 @get('/manage/')
 def manage():

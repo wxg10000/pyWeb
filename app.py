@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-__author__ = 'Xiangui wang'
+__author__ = 'Michael Liao'
 
 '''
 async web application.
 '''
 
-import logging; logging.basicConfig(level=logging.INFO)
+
+import logging; logging.basicConfig(filename='logs/pyweb.log',filemode="w",level=logging.INFO)
 
 import asyncio, os, json, time
 from datetime import datetime
@@ -112,8 +113,8 @@ def response_factory(app, handler):
                 resp = web.Response(body=app['__templating__'].get_template(template).render(**r).encode('utf-8'))
                 resp.content_type = 'text/html;charset=utf-8'
                 return resp
-        if isinstance(r, int) and t >= 100 and t < 600:
-            return web.Response(t)
+        # if isinstance(r, int) and t >= 100 and t < 600:
+        #     return web.Response(t)
         if isinstance(r, tuple) and len(r) == 2:
             t, m = r
             if isinstance(t, int) and t >= 100 and t < 600:
